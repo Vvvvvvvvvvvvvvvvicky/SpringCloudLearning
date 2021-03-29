@@ -17,6 +17,6 @@ public class ConsumerController {
 //        return restTemplate.getForObject("http://localhost:8081/service/hello", String.class);
 
         //Eureka
-        return restTemplate.getForObject("http://PROVIDER/service/hello", String.class);
+        return restTemplate.getForObject("http://01-SPRINGCLOUD-SERVICE-PROVIDER/service/hello", String.class);
     }
 }
