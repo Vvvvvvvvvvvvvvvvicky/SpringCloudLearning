@@ -8,6 +8,7 @@
 
 02-springcloud-service-consumer
 服务消费者
+（调整了Ribbon的默认负载均衡策略，进行观察）
 
 03-springcloud-eureka-server
 服务注册中心(Ribbon)

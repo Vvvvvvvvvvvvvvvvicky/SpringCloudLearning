@@ -1,5 +1,7 @@
 package com.ibo.springcloud.config;
 
+import com.netflix.loadbalancer.IRule;
+import com.netflix.loadbalancer.RetryRule;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,5 +15,17 @@ public class BeanConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    /*
+     * description  指定负载均衡策略（此处是重试策略，默认是轮询）——测试：关闭其中一个服务，由轮询改为发单个服务
+     * date         2021/3/30 8:46 下午
+     * @author      vic
+     * @param
+     * @return      com.netflix.loadbalancer.IRule
+     */
+    @Bean
+    public IRule iRule(){
+        return new RetryRule();
     }
 }
