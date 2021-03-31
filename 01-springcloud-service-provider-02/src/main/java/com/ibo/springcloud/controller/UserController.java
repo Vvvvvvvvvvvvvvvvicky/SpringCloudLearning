@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    @RequestMapping("/user/simpleuser")
+    @RequestMapping("service/user")
     public User simpleuser(){
-        System.out.println("2222");
-        return new User(1,"张三2","13111111111");
+        User user = new User();
+        user.setId(111);
+        user.setName("张三-2");
+        user.setPhone("13111122222");
+        return user;
     }
 }

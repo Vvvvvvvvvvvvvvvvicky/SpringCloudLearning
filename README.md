@@ -5,6 +5,7 @@
 服务提供者02
 
 模拟多个服务，观察consumer中Ribbon的负载均衡
+注意：如果使用了Rest方法获取对象，不能通过构造方法创建（要通过默认构造方法，利用get、set传参），否则会报406错误
 
 02-springcloud-service-consumer
 服务消费者

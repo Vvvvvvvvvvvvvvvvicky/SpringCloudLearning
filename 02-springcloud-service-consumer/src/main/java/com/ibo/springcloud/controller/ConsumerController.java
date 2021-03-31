@@ -49,13 +49,13 @@ public class ConsumerController {
 
 
 
-    @RequestMapping("/web/simple-user")
+    @RequestMapping("/web/user")
     public User getSimpleUser() {
         //手动指定（需要配置ip、端口）
 //        return restTemplate.getForObject("http://localhost:8081/service/hello", String.class);
 
         //REST的get方法
-        ResponseEntity<User> entity = restTemplate.getForEntity("http://01-SPRINGCLOUD-SERVICE-PROVIDER/user/simpleuser", User.class);
+        ResponseEntity<User> entity = restTemplate.getForEntity("http://01-SPRINGCLOUD-SERVICE-PROVIDER/service/user", User.class);
 
         HttpStatus statusCode = entity.getStatusCode();
         int statusCodeValue = entity.getStatusCodeValue();
@@ -68,7 +68,7 @@ public class ConsumerController {
         System.out.println(body);
 
         //Eureka
-        return restTemplate.getForEntity("http://01-SPRINGCLOUD-SERVICE-PROVIDER/user/simpleuser", User.class).getBody();
+        return restTemplate.getForEntity("http://01-SPRINGCLOUD-SERVICE-PROVIDER/service/user", User.class).getBody();
     }
 
 
