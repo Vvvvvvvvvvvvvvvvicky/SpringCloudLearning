@@ -1,6 +1,11 @@
 package com.ibo.springcloud.controller;
 
+import com.ibo.springcloud.hystrix.MyHystrixCommand;
 import com.ibo.springcloud.model.User;
+import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.netflix.hystrix.contrib.javanica.utils.FallbackMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -13,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @RestController
 public class ConsumerController {
@@ -129,5 +136,35 @@ public class ConsumerController {
 
     }
 
-    //POST/DELETE
+    //POST/DELETE(省略，用法类似)
+
+    //hystrix熔断(使用默认的熔断方式)
+    @RequestMapping("/web/hystrix")
+    @HystrixCommand(fallbackMethod = "error",
+            ignoreExceptions = RuntimeException.class,
+            commandProperties = {@HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds",value="500")})
+    public String hystrix() {
+        return restTemplate.getForEntity("http://01-SPRINGCLOUD-SERVICE-PROVIDER/service/hello", String.class).getBody();
+    }
+
+    //hystrix熔断(使用自定义的熔断方式)
+    @RequestMapping("/web/hystrix2")
+    public String hystrix2() throws ExecutionException, InterruptedException {
+        MyHystrixCommand myHystrixCommand = new MyHystrixCommand(com.netflix.hystrix.HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("")), restTemplate);
+
+        //同步阻塞
+//        String execute = (String) myHystrixCommand.execute();
+
+        //异步非阻塞
+        Future<String> queue = myHystrixCommand.queue();
+        String execute  = queue.get();
+
+        return execute;
+    }
+
+    //定义一个熔断后的方法
+    public String error(){
+        return "error";
+    }
+
 }

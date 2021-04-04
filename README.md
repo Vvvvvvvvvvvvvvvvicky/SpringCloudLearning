@@ -14,3 +14,9 @@
 03-springcloud-eureka-server
 服务注册中心(Ribbon)
 有两个实例（通过启动指定不同的配置文件实现两个注册服务，实现注册中心的高可用）
+
+04-springcloud-hystrix-dashboard
+hystrix的dashboard，配置成单独的一个服务，用来监控查看服务状态
+
+05-springcloud-service-feign
+feign的使用（注意与Ribbon的使用区别）

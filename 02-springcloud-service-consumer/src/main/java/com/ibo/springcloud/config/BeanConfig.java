@@ -2,6 +2,7 @@ package com.ibo.springcloud.config;
 
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RetryRule;
+import com.netflix.loadbalancer.RoundRobinRule;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,10 @@ public class BeanConfig {
      */
     @Bean
     public IRule iRule(){
-        return new RetryRule();
+        //重试策略
+//        return new RetryRule();
+
+        //采用默认轮询策略，查看熔断现象
+        return new RoundRobinRule();
     }
 }
