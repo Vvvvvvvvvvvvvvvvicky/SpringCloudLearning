@@ -20,3 +20,8 @@ hystrix的dashboard，配置成单独的一个服务，用来监控查看服务�
 
 05-springcloud-service-feign
 feign的使用（注意与Ribbon的使用区别）
+
+06-springcloud-api-gateway
+网关
+
+分布式配置中心也可以测试一下，具体方式见笔记
